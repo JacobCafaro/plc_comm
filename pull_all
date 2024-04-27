@@ -1,0 +1,17 @@
+from pycomm3 import LogixDriver
+
+ip = 'IP Address'
+#I am to understand the processor number is zero in most cases
+processor = 0 
+
+tags = ['tag name 1', "tag name 2", "tag name 3"]
+
+#Execution of connection and data pull
+try:
+  with LogixDriver(f"{ip}:{processor}") as plc:
+    for tag in tags:
+      tag_data = plc.read(tag)
+      print(f"Tag: {tag_data.tag}, Value: {tag_data.value}, Type: {tag_data.type}")
+
+except Exception as e:
+  print(f"Connection error: {e}")
