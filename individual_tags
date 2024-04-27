@@ -1,0 +1,9 @@
+from pylogix import PLC
+
+with PLC() as comm:
+    comm.IPAddress = 'IP address'
+    tg = comm.Read('tag name')
+    tg0 = tg.TagName
+    tg1 = tg.Value
+    tg2 = tg.Status
+    print(f'Tag Name: {tg0}\nTag Value: {tg1}\nTage Status: {tg2}')
