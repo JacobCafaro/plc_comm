@@ -1,17 +1,26 @@
+#xlsxwriter is the module that can create an excel file for us to export to
+#I just looked up a YouTube video on how to use it so the results here may be ugly but it is a start
 import xlsxwriter as xw
 import pylogix
 
 with PLC('IP address') as comm:
+#Trying to get the program to pull a list of tags
   tags = ['tag name 1', 'tag name 2', 'tag name 3']
   ret = comm.Read(tags)
 
+#ret should be formatted as such [Response(TagName= X, Value= Y, Status=Z), Response(TagName= AA...)
+#I want to pull that info into a list of dictionaries and since ret is formatted as a list, the dictionary should populate
+#This could fail, I have not worked with dictionaries since I first started learning python and I did not consult any resources when I wrote this
 data = [{'Name' : ret[0].TagName, 'Value' : ret[0].Value}, 
         {'Name' : ret[1].TagName, 'Value' : ret[1].Value},
         {'Name' : ret[2].TagName, 'Value' : ret[2].Value}]
 
-workbook = xw.Workbook(PLCdata.xlsx)
+#The two following lines create and name the workbook and worksheet
+workbook = xw.Workbook('PLCdata.xlsx')
 worksheet = workbook.add_worksheet('Sheet1')
 
+#copied everything else straight from the video I watched
+#I understand some of it but it looks to me like it sets the index twice?
 worksheet.write(0,0 , '#')
 worksheet.write(0,1 , 'Name')
 worksheet.write(0,2 , 'Value')
@@ -23,3 +32,4 @@ for index, entry in enumerate(data):
 
 workbook.close()
 comm.close()
+#I am not sure if this will work, but I think it will certainly get us one step closer to the end goal.
