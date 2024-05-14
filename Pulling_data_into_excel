@@ -1,0 +1,25 @@
+import xlsxwriter as xw
+import pylogix
+
+with PLC('IP address') as comm:
+  tags = ['tag name 1', 'tag name 2', 'tag name 3']
+  ret = comm.Read(tags)
+
+data = [{'Name' : ret[0].TagName, 'Value' : ret[0].Value}, 
+        {'Name' : ret[1].TagName, 'Value' : ret[1].Value},
+        {'Name' : ret[2].TagName, 'Value' : ret[2].Value}]
+
+workbook = xw.Workbook(PLCdata.xlsx)
+worksheet = workbook.add_worksheet('Sheet1')
+
+worksheet.write(0,0 , '#')
+worksheet.write(0,1 , 'Name')
+worksheet.write(0,2 , 'Value')
+
+for index, entry in enumerate(data):
+  worksheet.write(index+1,0 , str(index))
+  worksheet.write(index+1,1 , entry['Name'])
+  worksheet.write(index+1,2 , entry['Value'])
+
+workbook.close()
+comm.close()
