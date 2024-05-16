@@ -8,7 +8,7 @@ with PLC('IP address') as comm:
   tags = ['tag name 1', 'tag name 2', 'tag name 3']
   ret = comm.Read(tags)
 
-#ret should be formatted as such [Response(TagName= X, Value= Y, Status=Z), Response(TagName= AA...)
+#ret should be formatted as such [Response(TagName= X, Value= Y, Status=Z), Response(TagName= AA...)]
 #I want to pull that info into a list of dictionaries and since ret is formatted as a list, the dictionary should populate
 #This could fail, I have not worked with dictionaries since I first started learning python and I did not consult any resources when I wrote this
 data = [{'Name' : ret[0].TagName, 'Value' : ret[0].Value}, 
