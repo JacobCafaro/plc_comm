@@ -1,13 +1,13 @@
-#xlsxwriter is the module that can create an excel file for us to export to
-#I just looked up a YouTube video on how to use it so the results here may be ugly but it is a start
+#Import os?
 import xlsxwriter as xw
 import pylogix
-
+#added ability to input IP address from code terminal
 ip_add = input('Please enter the IP address: ')
 
-with PLC('ip_add') as comm:
-#Trying to get the program to pull a list of tags
+with PLC(ip_add) as comm:
+
   tags = []
+#function allows the user to add tags to the list the program will pull from
 def enter_tag():
   x = True
   while x:
@@ -17,6 +17,8 @@ def enter_tag():
       tags.append(tag_name)
     if tag_name == '0':
       x = False
+#Only enter 3 tag names as I have not set up the dictionaries to take more than 3 inputs
+enter_tag()
 
 ret = comm.Read(tags)
 
