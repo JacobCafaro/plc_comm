@@ -3,10 +3,22 @@
 import xlsxwriter as xw
 import pylogix
 
-with PLC('IP address') as comm:
+ip_add = input('Please enter the IP address: ')
+
+with PLC('ip_add') as comm:
 #Trying to get the program to pull a list of tags
-  tags = ['tag name 1', 'tag name 2', 'tag name 3']
-  ret = comm.Read(tags)
+  tags = []
+def enter_tag():
+  x = True
+  while x:
+    tag_name = input('Please enter the name of the tag: ')
+    print('Enter "0" when finished')
+    if tag_name != '0':
+      tags.append(tag_name)
+    if tag_name == '0':
+      x = False
+
+ret = comm.Read(tags)
 
 #ret should be formatted as such [Response(TagName= X, Value= Y, Status=Z), Response(TagName= AA...)]
 #I want to pull that info into a list of dictionaries and since ret is formatted as a list, the dictionary should populate
