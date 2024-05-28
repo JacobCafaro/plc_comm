@@ -17,17 +17,23 @@ def enter_tag():
       tags.append(tag_name)
     if tag_name == '0':
       x = False
-#Only enter 3 tag names as I have not set up the dictionaries to take more than 3 inputs
+
 enter_tag()
 
 ret = comm.Read(tags)
 
+data = []
+
+for item in ret:
+  ret_dict = {'Name' : item.TagName, 'Value' : item.Value}
+  data.append(ret_dict)
+
 #ret should be formatted as such [Response(TagName= X, Value= Y, Status=Z), Response(TagName= AA...)]
 #I want to pull that info into a list of dictionaries and since ret is formatted as a list, the dictionary should populate
 #This could fail, I have not worked with dictionaries since I first started learning python and I did not consult any resources when I wrote this
-data = [{'Name' : ret[0].TagName, 'Value' : ret[0].Value}, 
+"""data = [{'Name' : ret[0].TagName, 'Value' : ret[0].Value}, 
         {'Name' : ret[1].TagName, 'Value' : ret[1].Value},
-        {'Name' : ret[2].TagName, 'Value' : ret[2].Value}]
+        {'Name' : ret[2].TagName, 'Value' : ret[2].Value}]"""
 
 #The two following lines create and name the workbook and worksheet
 workbook = xw.Workbook('PLCdata.xlsx')
